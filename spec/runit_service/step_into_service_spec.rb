@@ -256,6 +256,10 @@ describe 'runit_service' do
     it 'zaps any extra env files' do
       expect(chef_run).to run_ruby_block('zap extra env files for env-files service')
     end
+
+    it 'notifies the runit service to restart when its env files are updated' do
+      expect(service).to notify('ruby_block[restart_service]').to(:run).delayed
+    end
   end
 
   context 'with template options' do
